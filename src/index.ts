@@ -1,10 +1,10 @@
 import axios from 'axios';
 import fs, { WriteStream } from 'fs';
-import path, { resolve } from 'path';
+import path from 'path';
 
 const baseURL:string = 'https://dadosabertos.rfb.gov.br/CNPJ/';
 const endpoints = [
-    'Empresas0','Empresas1','Empresas2','Empresas3', 'Empresas4', 'Empresas5','Empresas6','Empresas7','Empresas8', 'Empresas9','Estabelecimentos0','Estabelecimentos1','Estabelecimentos2','Estabelecimentos3','Estabelecimentos4','Estabelecimentos5','Estabelecimentos6','Estabelecimentos7','Estabelecimentos8','Estabelecimentos9','Simples','Socios1','Socios2','Socios3','Socios4','Socios5','Socios6','Socios7','Socios8','Socios9'
+    'Empresas0.zip', 'Empresas1.zip', 'Empresas2.zip', 'Empresas3.zip', 'Empresas4.zip', 'Empresas5.zip', 'Empresas6.zip', 'Empresas7.zip', 'Empresas8.zip', 'Empresas9.zip', 'Estabelecimentos0.zip', 'Estabelecimentos1.zip', 'Estabelecimentos2.zip', 'Estabelecimentos3.zip', 'Estabelecimentos4.zip', 'Estabelecimentos5.zip', 'Estabelecimentos6.zip', 'Estabelecimentos7.zip', 'Estabelecimentos8.zip', 'Estabelecimentos9.zip', 'Simples.zip', 'Socios1.zip', 'Socios2.zip', 'Socios3.zip', 'Socios4.zip', 'Socios5.zip', 'Socios6.zip', 'Socios7.zip', 'Socios8.zip', 'Socios9.zip'
 ];
 
 async function downloadFile(endpoint:string) {
@@ -20,7 +20,7 @@ async function downloadFile(endpoint:string) {
             responseType: 'stream'
         });
 
-        const filePath:string = path.join(__dirname, fileName);
+        const filePath:string = path.join("./downloads", fileName);
         const writer:WriteStream = fs.createWriteStream(filePath);
         response.data.pipe(writer)
 
@@ -29,7 +29,7 @@ async function downloadFile(endpoint:string) {
             writer.on('error', reject)
         });
     } catch(error) {
-        console.error(`Erro ao baixar ${fileName}`);
+        console.error(`Erro ao baixar ${fileName}: ${error}`);
     }
 
 }
